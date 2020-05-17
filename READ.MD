@@ -1,0 +1,3 @@
+Installeer:
+- UScreenCapture
+- FFMPEG

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>StreamingApp</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+</head>
+<body>
+    <video autoplay id="video"></video>
+    <button id="start" onclick="startStreaming()">Start</button>
+    <button id="stop" onclick="stopStreaming()">Stop</button>
+
+    <script>
+        const socket = io();
+
+        function stopStreaming() {
+            console.log('Stopped Streaming');
+            socket.emit("stop-streaming", {});
+        }
+
+        function startStreaming() {
+            console.log('Started Streaming');
+            socket.emit("start-streaming", {});
+        }
+
+        navigator.getUserMedia(
+            {video: true, audio: false},
+            stream => {
+                const localVideo = document.getElementById("video");
+                if (localVideo) {
+                    localVideo.srcObject = stream;
+                }
+            },
+            error => {
+                console.warn(error.message);
+            }
+        );
+    </script>
+</body>
+</html>
